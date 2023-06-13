@@ -8,5 +8,4 @@ Primer programa con python (pysimplegui)
 Demo
 
 
-https://github.com/Sedrini/revanced-boiler/assets/36553765/01dce580-2213-497a-a244-4259b092175b
-
+https://github.com/Sedrini/revanced-boiler/assets/36553765/754ca244-0506-417c-89b6-6699e42149b7
