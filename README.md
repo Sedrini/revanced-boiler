@@ -1,5 +1,6 @@
 # revanced-boiler
-project pysimplegui - Build apps with revanced patches, (custom youtube patches)
+project pysimplegui - Build apps with revanced patches.
+-custom youtube patches available
 
 
 ![image](https://github.com/Sedrini/revanced-boiler/assets/36553765/25edbd56-b7e2-44ff-b5e8-4d50bbbdf87d)
