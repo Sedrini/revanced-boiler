@@ -1,7 +1,6 @@
 # revanced-boiler
-project pysimplegui
+project pysimplegui - Build apps with revanced patches, (custom youtube patches)
 
-Primer programa con python (pysimplegui)
 
 ![image](https://github.com/Sedrini/revanced-boiler/assets/36553765/25edbd56-b7e2-44ff-b5e8-4d50bbbdf87d)
 
