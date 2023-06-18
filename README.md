@@ -7,4 +7,6 @@ Primer programa con python (pysimplegui)
 
 Demo
 
-[2023-06-13 14-42-41(1).webm](https://github.com/Sedrini/revanced-boiler/assets/36553765/408b53c2-70a2-4125-acc3-f8d5961dcff3)
+[It should open the folder where the apk is located, but idk why is not, it does it on Default profile but no on Custom]
+https://github.com/Sedrini/revanced-boiler/assets/36553765/11b74d4a-36eb-4a9e-95a3-9e9a60fffbaa
+
