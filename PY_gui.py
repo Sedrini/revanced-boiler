@@ -1,16 +1,15 @@
 import PySimpleGUI as sg
+import os
 import json
 from GUITOOLS.Choose_file import seleccionar_archivo
 from GUITOOLS.patcher import pathcer_name
 from GUITOOLS.download_files import check_files
-from GUITOOLS.Api_info import check_update3,read_compatible_version
+from GUITOOLS.Api_info import check_update3,read_compatible_version, write_json_profile
 from GUITOOLS.layout.patches_layout import layu
 from GUITOOLS.ping import estatus
 from GUITOOLS.pathz import paths
 import webbrowser
 
-path = paths()
-custom_json = path[6]
 
 # Layout target version
 def update_layout(window, selected_option,_):
@@ -234,6 +233,13 @@ def read_config_from_json(custom_json):
 
 
 def profiles_screen():
+    path = paths()
+    custom_json = path[6]
+    if os.path.exists(custom_json):
+        pass
+    else: 
+        write_json_profile()
+
     # NO te the most clean, but it should work
     config = read_config_from_json(custom_json)
 

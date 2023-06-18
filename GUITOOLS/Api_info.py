@@ -36,16 +36,20 @@ def read_compatible_version():
     check_update3()
     folders = paths()
     json_file = folders[0]
-    with open(json_file) as f:
-            data = json.load(f)
-            # Patches 
-            youtube = data['INFO'][3]['youtube']
-            twitch = data['INFO'][3]['twitch']
-            youtube_music = data['INFO'][3]['youtube_music']
-            instagram = data['INFO'][3]['instagram_version']
-            twitter = data['INFO'][3]['twitter_version']
+    try:
+        with open(json_file) as f:
+                data = json.load(f)
+                # Patches 
+                youtube = data['INFO'][3]['youtube']
+                twitch = data['INFO'][3]['twitch']
+                youtube_music = data['INFO'][3]['youtube_music']
+                instagram = data['INFO'][3]['instagram_version']
+                twitter = data['INFO'][3]['twitter_version']
+                compatible_j = [youtube,twitch,youtube_music,instagram,twitter]
+    except:
+        write_json()
  
-    compatible_j = [youtube,twitch,youtube_music,instagram,twitter]
+    
     
     return compatible_j
 
@@ -81,6 +85,7 @@ def download_url():
     return patches_url, patches_name, cli_url, cli_name, integrations_url, integrations_name, file_list
 
 def write_json():
+    write_json_profile()
     compatible = compatible_version()
     response_tools = api_requests()[1]
     folders = paths()
@@ -202,3 +207,21 @@ def check_update3():
             write_json()
         
         c = c+1
+
+def write_json_profile():
+
+    compatible = compatible_version()
+    response_tools = api_requests()[1]
+    folders = paths()
+    custom_json = folders[6]
+
+    
+    data = [
+        {
+    "always-autorepeat": False,
+
+}
+    ]
+
+    with open(f"{custom_json}", "w") as outfile:
+        json.dump({"": data}, outfile, indent=2)
