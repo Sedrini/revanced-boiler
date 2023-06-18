@@ -2,9 +2,9 @@ import subprocess
 import threading
 import PySimpleGUI as sg
 
-def run_command(command):
+def run_command(command, name_apk, patched_folder):
     #command = r'cd /d C:\Users\Adrik_77\Documents\Revanced_Boiler\Tools && java -jar ReVanced-cliv2.21.2.jar -a C:/Users/Adrik_77/Downloads/youtube18.19.35.apk -b revanced-patchesv2.175.0.jar -m ReVanced-integrationsv0.109.0.apk -e always-autorepeat -e custom-video-buffer -e debugging -e downloads -e hide-my-mix -o C:\Users\Adrik_77\Documents\Revanced_Boiler\Patched_apk\111ReYoutube.apk -c'
-
+    
     try:
         process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
         
@@ -36,11 +36,16 @@ def run_command(command):
                 # El proceso ha terminado
                 break
         
+   
+        
         process.terminate()
         output_thread.join()
         window.close()
-        
+    
+
+
     except subprocess.CalledProcessError as e:
         error_output = e.stderr
         sg.popup_error('Error al ejecutar el comando', error_output)
+
 

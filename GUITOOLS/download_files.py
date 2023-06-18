@@ -97,11 +97,13 @@ def check_files():
     file_list = download_url()[6]
     for file in file_list:
         if not os.path.exists(os.path.join(folders[3], file)):
-            download_files()
-            break
+            try:
+                download_files()
+            except:
+                None
         else:
-            pass
-    
+            None
+        
     sg.popup('No updates |avalibles|')
 
 

@@ -33,17 +33,18 @@ def compatible_version():
     return compatible
 
 def read_compatible_version():
+    check_update3()
     folders = paths()
     json_file = folders[0]
     with open(json_file) as f:
-        data = json.load(f)
-        # Patches 
-        youtube = data['INFO'][3]['youtube']
-        twitch = data['INFO'][3]['twitch']
-        youtube_music = data['INFO'][3]['youtube_music']
-        instagram = data['INFO'][3]['instagram']
-        twitter = data['INFO'][3]['twitter']
-
+            data = json.load(f)
+            # Patches 
+            youtube = data['INFO'][3]['youtube']
+            twitch = data['INFO'][3]['twitch']
+            youtube_music = data['INFO'][3]['youtube_music']
+            instagram = data['INFO'][3]['instagram_version']
+            twitter = data['INFO'][3]['twitter_version']
+ 
     compatible_j = [youtube,twitch,youtube_music,instagram,twitter]
     
     return compatible_j
