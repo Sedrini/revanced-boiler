@@ -52,8 +52,7 @@ def update_layout(window, selected_option,_):
 
 def apk_name(option, profile):
     file = seleccionar_archivo()
-    pygame.mixer.init()
-    play_sound('Estadio.mp3')
+    
 
     if file == "":
         sg.popup('EMPTY FILE')
@@ -136,11 +135,10 @@ def main():
             selected_option = values['dropdown']
             if selected_option == '':
                 None
-                
+            if profile == '':
+                None
             else:
-                
                 apk_name(selected_option, profile)
-                stop_sound()
 
         elif event == 'update':
             estatos = estatus()
