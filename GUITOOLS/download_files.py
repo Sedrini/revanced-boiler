@@ -5,6 +5,7 @@ import win32api
 import PySimpleGUI as sg
 from Api_info import download_url
 from pathz import paths
+from ping import estatus
 
 
 def download_files():
@@ -46,7 +47,6 @@ def download_files():
 
     sg.popup('Descarga completada', 'Archivos',patches_name,cli_name,integrations_name)
 
-
 def download_one_file(url,ext):
     documents_folder = paths()[1]
 
@@ -81,38 +81,35 @@ def download_one_file(url,ext):
 
     sg.popup('Descarga completada', 'Archivo descargado:', filename)
 
-
 def check_files():
+    create_folder()
     #paths
     folders = paths()
-   
+    estatos = estatus()    
+    if estatos == 'Online':
+        file_list = download_url()[6]
+        for file in file_list:
+            if not os.path.exists(os.path.join(folders[3], file)):
+                try:
+                    download_files()
+                except:
+                    None
+            else:
+                None
+        
+        sg.popup('No updates |avalibles|')
+    else:
+        None
 
-    # CREATE FOLDERS IF THEY DON'T EXIST
+def create_folder():
+    folders = paths()
+
     for folder in folders[1:]:
         if not os.path.exists(folder):
-            create_folder(folder)
-    
-    
-    # Verificamos si los archivos existen, si existen los descarga
-    file_list = download_url()[6]
-    for file in file_list:
-        if not os.path.exists(os.path.join(folders[3], file)):
-            try:
-                download_files()
-            except:
-                None
-        else:
-            None
-        
-    sg.popup('No updates |avalibles|')
+            os.makedirs(folder)
 
-
-
-def create_folder(folder):    
-    os.makedirs(folder)
-
-    file_path = folder / "my_file.txt"
-    if os.path.exists(file_path):
-        win32api.SetFileAttributes(str(file_path), win32api.FILE_ATTRIBUTE_NORMAL)
+            file_path = folder / "my_file.txt"
+            if os.path.exists(file_path):
+                win32api.SetFileAttributes(str(file_path), win32api.FILE_ATTRIBUTE_NORMAL)
 
 

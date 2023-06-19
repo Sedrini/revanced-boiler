@@ -6,16 +6,9 @@ from pathz import paths
 import os
 import json
 
-def pathcer_name(option, file, name_apk, profile):
-    #RETURNS
-    folders = paths()
-    Tools_folder = folders[3]
-    file_list = download_url()[6]
-    patched_folder= folders[2]
 
 
-
-    def show_custom_popup():
+def show_custom_popup(name_apk,patched_folder):
         layout = [
             [sg.Text(f'Patched app: {name_apk}')],
             [sg.Text(f'Patched folder: {patched_folder}')],
@@ -40,9 +33,15 @@ def pathcer_name(option, file, name_apk, profile):
 
         window.close()
 
+def pathcer_name(option, file, name_apk, profile):
+    #RETURNS
+    folders = paths()
+    Tools_folder = folders[3]
+    file_list = download_url()[6]
+    patched_folder= folders[2]
 
     i = 0
-    while os.path.exists(patched_folder / name_apk) and i < 20:
+    while os.path.exists(patched_folder / name_apk) and i < 8:
         name_apk = '1'+name_apk
         i = i+1
     else:
@@ -55,10 +54,8 @@ def pathcer_name(option, file, name_apk, profile):
     apk_output = patched_folder / name_apk
 
     if profile == 'Custom':
-        custom_patch(option, file, name_apk, profile)
+        custom_patch(option, file, name_apk, profile,apk_output)
     else:
-
-
 
         command_map = {
             'Youtube': f"java -jar {file_list[1]} -a {file} -b {file_list[0]} -m {file_list[2]} -e always-autorepeat -e custom-video-buffer -e debugging -e downloads -e hide-my-mix -o {apk_output} -c",
@@ -74,45 +71,15 @@ def pathcer_name(option, file, name_apk, profile):
             command = command_map[option]
             comend = f"cd /d {Tools_folder} && {command}"
             run_command(comend, name_apk, patched_folder)
-            show_custom_popup()
+            show_custom_popup(name_apk,patched_folder)
         else:
             None
 
-
-def custom_patch(option, file, name_apk, profile):
+def custom_patch(option, file, name_apk, profile,apk_output):
     folders = paths()
     Tools_folder = folders[3]
-    file_list = download_url()[6]
     patched_folder= folders[2]
     json_file = folders[6]
-
-
-    def show_custom_popup():
-        layout = [
-            [sg.Text(f'Patched app: {name_apk}')],
-            [sg.Text(f'Patched folder: {patched_folder}')],
-            [sg.Text('just to make space')],
-            [sg.Button('Patched folder', key='-pfolder-')
-             ], 
-
-             ]
-        
-
-        window = sg.Window('Patched about', layout)
-
-        while True:
-            event, _ = window.read()
-
-            if event in (sg.WINDOW_CLOSED, 'Botón 1', 'Botón 2'):
-                break
-            
-            if event in (sg.WINDOW_CLOSED, '-pfolder-'):
-               subprocess.run(['explorer', patched_folder]) 
-            
-
-        window.close()
-
-
 
     with open(json_file) as filu:
         data = json.load(filu)
@@ -122,7 +89,7 @@ def custom_patch(option, file, name_apk, profile):
     f'-a {file}',
     '-b Revanced-patchesv2.177.0.jar',
     '-m ReVanced-integrationsv0.110.0.apk',
-    f'-o {patched_folder}',
+    f'-o {apk_output}',
     '-c']
     
     # Add parameters based on JSON values
@@ -238,9 +205,8 @@ def custom_patch(option, file, name_apk, profile):
     command = ' '.join(command_parts)
     try:
         run_command(command, name_apk, patched_folder)
-        show_custom_popup()
+        show_custom_popup(name_apk,patched_folder)
     except:
-        pass
+        None
 
-    
-
+    None

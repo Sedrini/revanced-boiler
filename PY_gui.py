@@ -3,13 +3,13 @@ import os
 import json
 from GUITOOLS.Choose_file import seleccionar_archivo
 from GUITOOLS.patcher import pathcer_name
-from GUITOOLS.download_files import check_files
+from GUITOOLS.download_files import check_files, create_folder
 from GUITOOLS.Api_info import check_update3,read_compatible_version, write_json_profile
-from GUITOOLS.layout.patches_layout import layu
 from GUITOOLS.ping import estatus
 from GUITOOLS.pathz import paths
+from GUITOOLS.sound.sounds import play_sound, stop_sound
 import webbrowser
-
+import pygame
 
 # Layout target version
 def update_layout(window, selected_option,_):
@@ -52,6 +52,8 @@ def update_layout(window, selected_option,_):
 
 def apk_name(option, profile):
     file = seleccionar_archivo()
+    pygame.mixer.init()
+    play_sound('Estadio.mp3')
 
     if file == "":
         sg.popup('EMPTY FILE')
@@ -66,9 +68,8 @@ def apk_name(option, profile):
 
         pathcer_name(option, file, name_apk, profile)
 
-def main():   
-
-
+def main():
+    create_folder()
     def layu():
         compatible = read_compatible_version()
         estatos = estatus()
@@ -80,7 +81,7 @@ def main():
         ]
 
         options = ['','Youtube', 'Youtube Music','Tiktok','Twitter', 'Twitch', 'Other' ]
-        profiles = ['','Default', 'Custom', 'Maybe-Working :|']
+        profiles = ['','Default', 'Custom']
 
         layout = [
             [sg.Menu(menu_layout)],
@@ -89,25 +90,24 @@ def main():
                 
                 [sg.Text('Application', pad=((0, 0), (30, 0))), 
                  sg.DropDown(options, key='dropdown', size=(13, 1), enable_events=True, pad=((20, 0), (30, 0))  ),
-                
                 sg.Text('Target Version: ', pad=((70, 0), (20, 0)),  border_width=10),
                 sg.Text(compatible[0], key='-Youtube-',visible=False, pad=((0, 0), (20, 0)),  border_width=10),
                 sg.Text(compatible[1], key='-Twitch-',visible=False, pad=((0, 0), (20, 0)),  border_width=10),
                 sg.Text(compatible[2], key='-ymusic-',visible=False, pad=((0, 0), (20, 0)),  border_width=10),
                 sg.Text('All :) ', key='-tiktok-',visible=False, pad=((0, 0), (20, 0)),  border_width=10),
                 sg.Text(compatible[4], key='-twitter-',visible=False, pad=((0, 0), (20, 0)),  border_width=10),
-                
+                ],
+                [
+                sg.Text('   Profile    ', pad=((0, 0), (30, 0))), 
+                sg.DropDown(profiles, key='profile', size=(13, 1), pad=((20, 0), (30, 0))),
                 ],
 
-                [sg.Text('   Profile    ', pad=((0, 0), (30, 0))), 
-                 sg.DropDown(profiles, key='profile', size=(13, 1), pad=((20, 0), (30, 0))),
-                ],
-
-                [sg.Button('Patch',font=('Arial', 11),size=(7, 1),auto_size_button=True,button_color =('#000000','#6fcb9f'), enable_events=True, key='-patch-', pad=((10, 0), (40, 0))),
-                  sg.Button('Update',font=('Arial', 11),size=(7, 1),auto_size_button=True,button_color =('#000000','#6fcb9f'), key='update', pad=((43, 0), (40, 0)))],
+                [
+                sg.Button('Patch',font=('Arial', 11),size=(7, 1),auto_size_button=True,button_color =('#000000','#6fcb9f'), enable_events=True, key='-patch-', pad=((10, 0), (40, 0))),
+                sg.Button('Update',font=('Arial', 11),size=(7, 1),auto_size_button=True,button_color =('#000000','#6fcb9f'), key='update', pad=((43, 0), (40, 0)))],
 
             ])],
-            [sg.Button('gola',key='caa', pad=((433, 0), (10, 0)), enable_events=True)]
+            #[sg.Button('gola',key='caa', pad=((433, 0), (10, 0)), enable_events=True)]
 
 
             ]
@@ -138,7 +138,9 @@ def main():
                 None
                 
             else:
+                
                 apk_name(selected_option, profile)
+                stop_sound()
 
         elif event == 'update':
             estatos = estatus()
@@ -157,11 +159,6 @@ def main():
 
             update_layout(window, selected_app,selected_profile)
 
-        elif event == 'caa':
-            
-            config_screen()
-
-
         elif event == '-youtube':
              url = 'https://www.apkmirror.com/apk/google-inc/youtube/youtube-18-19-35-release/youtube-18-19-35-android-apk-download/'  # Reemplaza con la URL de la página que deseas abrir
              webbrowser.open(url)
@@ -169,8 +166,12 @@ def main():
         elif event == 'revanced.app':
              url = 'https://revanced.app/'  # Reemplaza con la URL de la página que deseas abrir
              webbrowser.open(url)
+
         elif event == '-Youtube':
+             pygame.mixer.init()
+             play_sound('Potion Shop.flac')
              profiles_screen()
+             stop_sound()
 
     # Cierra la ventana y finaliza el programa
     window.close()
@@ -225,12 +226,10 @@ def config_screen():
     # Cierra la ventana y finaliza el programa
     window.close()
 
-
 def read_config_from_json(custom_json):
     with open(custom_json) as file:
         config = json.load(file)
     return config
-
 
 def profiles_screen():
     path = paths()
@@ -450,8 +449,6 @@ def profiles_screen():
 
     # Cierra la ventana y finaliza el programa
     window.close()
-
-
 
 
 

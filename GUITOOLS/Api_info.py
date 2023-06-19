@@ -14,10 +14,12 @@ from pathz import paths
 
 
 def api_requests():
-    response_patches = requests.get("https://releases.revanced.app/patches").json()
-    response_tools = requests.get("https://releases.revanced.app/tools").json()
-    
-    return response_patches, response_tools
+    try:
+        response_patches = requests.get("https://releases.revanced.app/patches").json()
+        response_tools = requests.get("https://releases.revanced.app/tools").json()
+        return response_patches, response_tools
+    except:
+        None
 
 def compatible_version():
     response_patches = api_requests()[0]
@@ -33,26 +35,27 @@ def compatible_version():
     return compatible
 
 def read_compatible_version():
-    check_update3()
-    folders = paths()
-    json_file = folders[0]
     try:
-        with open(json_file) as f:
-                data = json.load(f)
-                # Patches 
-                youtube = data['INFO'][3]['youtube']
-                twitch = data['INFO'][3]['twitch']
-                youtube_music = data['INFO'][3]['youtube_music']
-                instagram = data['INFO'][3]['instagram_version']
-                twitter = data['INFO'][3]['twitter_version']
-                compatible_j = [youtube,twitch,youtube_music,instagram,twitter]
+        folders = paths()
+        json_file = folders[0]
+        try:
+            with open(json_file) as f:
+                    data = json.load(f)
+                    # Patches 
+                    youtube = data['INFO'][3]['youtube']
+                    twitch = data['INFO'][3]['twitch']
+                    youtube_music = data['INFO'][3]['youtube_music']
+                    instagram = data['INFO'][3]['instagram_version']
+                    twitter = data['INFO'][3]['twitter_version']
+                    compatible_j = [youtube,twitch,youtube_music,instagram,twitter]
+        except:
+            write_json()
+    
+        
+        
+        return compatible_j
     except:
-        write_json()
- 
-    
-    
-    return compatible_j
-
+        None
 
 def download_url():
     folders = paths()
@@ -60,7 +63,6 @@ def download_url():
 
     if not os.path.exists(os.path.join(json_file)):
         write_json()
-    
     
     with open(json_file) as f:
         data = json.load(f)
@@ -139,11 +141,6 @@ def write_json():
     
     return patches_version
 
-def test():
-    folders = paths()
-    
-    print(folders[1:3])
-
 def delete_old_files(blabla):
     #revanced-patches','ReVanced-integrations','ReVanced-cliv
     folders = paths()
@@ -164,7 +161,6 @@ def delete_old_files(blabla):
     except Exception as e:
         print(f"Error al eliminar archivos: {str(e)}")
         # Aquí puedes agregar un manejo de error adecuado si lo deseas
-
 
 def check_update3():
     response_tools = api_requests()[1]
