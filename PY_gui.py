@@ -52,15 +52,14 @@ def update_layout(window, selected_option,_):
 
 def apk_name(option, profile):
     file = seleccionar_archivo()
-    
 
     if file == "":
         sg.popup('EMPTY FILE')
     else:   
         if option == 'Youtube': name_apk = 'ReYoutube.apk' 
         if option == 'Youtube Music': name_apk = 'ReInstagram.apk'
-        if option == 'Tiktok': name_apk = 'ReTwitch.apk'
-        if option == 'Twitter': name_apk = 'ReTwitch.apk'
+        if option == 'Tiktok': name_apk = 'ReTikTok.apk'
+        if option == 'Twitter': name_apk = 'ReTwitter.apk'
         if option == 'Twitch': name_apk = 'ReTwitch.apk'
         if option == 'Other': name_apk = 'ReCustom.apk'
         if option == '': None
