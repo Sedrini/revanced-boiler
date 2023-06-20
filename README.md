@@ -4,12 +4,12 @@ project pysimplegui - Build apps with revanced patches.
 -custom youtube patches available
 
 
-![image](https://github.com/Sedrini/revanced-boiler/assets/36553765/25edbd56-b7e2-44ff-b5e8-4d50bbbdf87d)
+![image](https://github.com/Sedrini/revanced-boiler/assets/36553765/7a979bc4-1e79-4a83-b1b4-4001c0311b47)
 
 
 Demo
 
 [It should open the folder where the apk is located, but idk why is not, it does it on Default profile but no on Custom]
-![video](https://github.com/Sedrini/revanced-boiler/assets/36553765/47fd15c2-5e6a-4305-aaa5-8212bd15f387)
 
+[test.webm](https://github.com/Sedrini/revanced-boiler/assets/36553765/1f7e23fe-aa92-4958-9d31-e5d74cef1376)
 
