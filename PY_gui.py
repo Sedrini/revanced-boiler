@@ -82,10 +82,12 @@ def main():
         layout = [
             [sg.Menu(menu_layout)],
             [sg.Column([
-                [sg.Text("version 1.4", pad=((0, 0), (0, 0))),sg.Text("  Revanced | Boiler ", font='Helvetica', pad=((80, 89), (0, 0))), sg.Text(f"Status: {estatos}")],
+                [sg.Text("version 1.5", pad=((0, 0), (0, 0)),background_color='#b4eeb4', ),
+                 sg.Text("  Revanced | Boiler ", font='Helvetica', pad=((80, 89), (0, 0)),), 
+                 sg.Text(f"Status: {estatos}", )],
                 
-                [sg.Text('Application', pad=((0, 0), (30, 0))), 
-                 sg.DropDown(options, key='dropdown', size=(13, 1), enable_events=True, pad=((20, 0), (30, 0))  ),
+                [sg.Text('Application', pad=((0, 0), (30, 0)),font=('Verdana', 11)), 
+                sg.DropDown(options, key='dropdown', size=(13, 1), enable_events=True, pad=((20, 0), (30, 0)),background_color='#f5f5dc'  ),
                 sg.Text('Target Version: ', pad=((70, 0), (20, 0)),  border_width=10),
                 sg.Text(compatible[0], key='-Youtube-',visible=False, pad=((0, 0), (20, 0)),  border_width=10),
                 sg.Text(compatible[1], key='-Twitch-',visible=False, pad=((0, 0), (20, 0)),  border_width=10),
@@ -93,13 +95,12 @@ def main():
                 sg.Text('All :) ', key='-tiktok-',visible=False, pad=((0, 0), (20, 0)),  border_width=10),
                 sg.Text(compatible[4], key='-twitter-',visible=False, pad=((0, 0), (20, 0)),  border_width=10),
                 ],
-                [
-                sg.Text('   Profile    ', pad=((0, 0), (30, 0))), 
-                sg.DropDown(profiles, key='profile', size=(13, 1), pad=((20, 0), (30, 0))),
+
+                [sg.Text('   Profile    ', pad=((0, 0), (30, 0)),font=('Verdana', 11)), 
+                sg.DropDown(profiles, key='profile', size=(13, 1), pad=((20, 0), (30, 0)),background_color='#f5f5dc'),
                 ],
 
-                [
-                sg.Button('Patch',font=('Arial', 11),size=(7, 1),auto_size_button=True,button_color =('#000000','#6fcb9f'), enable_events=True, key='-patch-', pad=((10, 0), (40, 0))),
+                [sg.Button('Patch',font=('Arial', 11),size=(7, 1),auto_size_button=True,button_color =('#000000','#6fcb9f'), enable_events=True, key='-patch-', pad=((10, 0), (40, 0))),
                 sg.Button('Update',font=('Arial', 11),size=(7, 1),auto_size_button=True,button_color =('#000000','#6fcb9f'), key='update', pad=((43, 0), (40, 0)))],
 
             ])],
@@ -238,16 +239,12 @@ def profiles_screen():
     
     def layut():
         
-        menu_layout = [
-        ['Revanced', ['revanced.app']],
-        ['Apkmirror', ['-youtube']],
-        
-        ]
+  
 
         config = read_config_from_json(custom_json)
 
         layout = [
-            [sg.Menu(menu_layout)],
+           
             [sg.Column([
                 [sg.Checkbox("always-autorepeat", key='-always-autorepeat'),
                 sg.Checkbox("client-spoof", key='-client-spoof'),
@@ -303,8 +300,8 @@ def profiles_screen():
                 sg.Checkbox("video-ads", key='-video-ads'),
                 sg.Checkbox("video-speed", key='-video-speed')],
                 [sg.Checkbox("wide-searchbar", key='-wide-searchbar'),
-                sg.Button('Save')]
-            ])]
+                sg.Button('Save'),sg.Button('Select all'),sg.Button("Selectn't all")]
+            ])]      
         ]
 
         return layout
@@ -439,6 +436,17 @@ def profiles_screen():
                 json.dump(config, file, indent=4)
             
             sg.popup("Configuration saved!")
+
+        elif event == "Select all":
+            for key in values:
+                if isinstance(window[key], sg.Checkbox):
+                    window[key].update(value=True)
+
+        elif event == "Selectn't all":
+            for key in values:
+                if isinstance(window[key], sg.Checkbox):
+                    window[key].update(value=False)
+        
 
     # Cierra la ventana y finaliza el programa
     window.close()
