@@ -50,6 +50,10 @@ def update_layout(window, selected_option,_):
 
 def apk_name(option, profile):
     file = seleccionar_archivo()
+    folders = paths()
+    patched_folder= folders[2]
+
+    i = 1
 
     if file == "":
         sg.popup('EMPTY FILE')
@@ -62,7 +66,20 @@ def apk_name(option, profile):
         if option == 'Other': name_apk = 'ReCustom.apk'
         if option == '': None
 
-        pathcer_name(option, file, name_apk, profile)
+        temp_name = name_apk
+
+        while os.path.exists(patched_folder / name_apk):
+            i = int(i)
+            i = i+1
+            i = str(i)
+            name_apk = i+name_apk
+            print(i)
+        else:
+            pass
+        
+        temp_name = i+temp_name       
+
+        pathcer_name(option, file, temp_name, profile)
 
 def main():
     create_folder()
@@ -453,13 +470,8 @@ def profiles_screen():
 
 
 
-
-main()
-
-
-
-
-
+if __name__ == '__main__':
+    main()
 
 
 

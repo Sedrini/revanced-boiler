@@ -12,7 +12,6 @@ def show_custom_popup(name_apk,patched_folder):
         layout = [
             [sg.Text(f'Patched app: {name_apk}')],
             [sg.Text(f'Patched folder: {patched_folder}')],
-            [sg.Text('just to make space')],
             [sg.Button('Patched folder', key='-pfolder-')
              ], 
 
@@ -39,13 +38,6 @@ def pathcer_name(option, file, name_apk, profile):
     Tools_folder = folders[3]
     file_list = download_url()[6]
     patched_folder= folders[2]
-
-    i = 0
-    while os.path.exists(patched_folder / name_apk) and i < 8:
-        name_apk = '1'+name_apk
-        i = i+1
-    else:
-        pass     
 
     apk_output = patched_folder / name_apk
 
