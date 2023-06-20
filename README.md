@@ -9,7 +9,7 @@ project pysimplegui - Build apps with revanced patches.
 
 Demo
 
-[It should open the folder where the apk is located, but idk why is not, it does it on Default profile but no on Custom]
+Need to change the add a '1' before the apk name if the file alredy exist, it look ugly so many 1
 
 [test.webm](https://github.com/Sedrini/revanced-boiler/assets/36553765/1f7e23fe-aa92-4958-9d31-e5d74cef1376)
 
