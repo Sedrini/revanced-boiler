@@ -3,7 +3,7 @@ from tqdm import *
 import os
 import win32api
 import PySimpleGUI as sg
-from Api_info import download_url
+from Api_info import download_url,write_json
 from pathz import paths
 from ping import estatus
 
@@ -95,7 +95,7 @@ def check_files():
                 except:
                     None
             else:
-                None
+                return
         
         sg.popup('No updates |avalibles|')
     else:
@@ -103,13 +103,18 @@ def check_files():
 
 def create_folder():
     folders = paths()
-
-    for folder in folders[1:]:
+    json_file = folders[0]
+            
+    for folder in folders[1:5]:
         if not os.path.exists(folder):
             os.makedirs(folder)
 
             file_path = folder / "my_file.txt"
             if os.path.exists(file_path):
                 win32api.SetFileAttributes(str(file_path), win32api.FILE_ATTRIBUTE_NORMAL)
+
+    
+    if not os.path.exists(json_file):
+        write_json()
 
 

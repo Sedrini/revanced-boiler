@@ -53,7 +53,7 @@ def pathcer_name(option, file, name_apk, profile):
     # Idk how to make them change when apply the new screen for configuration, i was thinking of making profiles.
     apk_output = patched_folder / name_apk
 
-    if profile == 'Custom':
+    if profile == 'Custom' and option == 'Youtube':
         custom_patch(option, file, name_apk, profile,apk_output)
     else:
 

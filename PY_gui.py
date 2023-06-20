@@ -7,9 +7,7 @@ from GUITOOLS.download_files import check_files, create_folder
 from GUITOOLS.Api_info import check_update3,read_compatible_version, write_json_profile
 from GUITOOLS.ping import estatus
 from GUITOOLS.pathz import paths
-from GUITOOLS.sound.sounds import play_sound, stop_sound
 import webbrowser
-import pygame
 
 # Layout target version
 def update_layout(window, selected_option,_):
@@ -165,10 +163,8 @@ def main():
              webbrowser.open(url)
 
         elif event == '-Youtube':
-             pygame.mixer.init()
-             play_sound('Potion Shop.flac')
-             profiles_screen()
-             stop_sound()
+            profiles_screen()
+
 
     # Cierra la ventana y finaliza el programa
     window.close()
