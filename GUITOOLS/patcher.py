@@ -1,8 +1,7 @@
 import PySimpleGUI as sg
 import subprocess
-from GUITOOLS.Api_info import download_url
-from subprocess_gui import run_command
-from pathz import paths
+import threading
+from GUITOOLS.Api_info import download_url,paths
 import os
 import json
 
@@ -62,12 +61,13 @@ def pathcer_name(option, file, name_apk, profile):
         if option in command_map:
             command = command_map[option]
             comend = f"cd /d {Tools_folder} && {command}"
-            run_command(comend, name_apk, patched_folder)
+            run_command_gui(comend, name_apk, patched_folder)
             show_custom_popup(name_apk,patched_folder)
         else:
             None
 
 def custom_patch(option, file, name_apk, profile,apk_output):
+
     folders = paths()
     Tools_folder = folders[3]
     patched_folder= folders[2]
@@ -196,9 +196,54 @@ def custom_patch(option, file, name_apk, profile,apk_output):
 
     command = ' '.join(command_parts)
     try:
-        run_command(command, name_apk, patched_folder)
+        run_command_gui(command, name_apk, patched_folder)
         show_custom_popup(name_apk,patched_folder)
     except:
         None
 
     None
+
+def run_command_gui(command, name_apk, patched_folder):
+    
+    try:
+        process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
+        
+        layout = [
+            [sg.Output(size=(60, 20), key='-OUTPUT-', pad=(0, 0))],
+            [sg.Button('Cerrar')]
+        ]
+        
+        window = sg.Window('Ejecutar Comando', layout, finalize=True)
+        
+        def read_output():
+            while True:
+                output = process.stdout.readline()
+                if output:
+                    window['-OUTPUT-'].print(output.strip())
+                else:
+                    break
+        
+        # Inicia un subproceso para leer la salida estándar en segundo plano
+        output_thread = threading.Thread(target=read_output)
+        output_thread.start()
+        
+        while True:
+            event, _ = window.read(timeout=100)
+            if event == 'Cerrar' or event == sg.WINDOW_CLOSED:
+                break
+            
+            if process.poll() is not None:
+                # El proceso ha terminado
+                break
+        
+   
+        
+        process.terminate()
+        output_thread.join()
+        window.close()
+    
+
+
+    except subprocess.CalledProcessError as e:
+        error_output = e.stderr
+        sg.popup_error('Error al ejecutar el comando', error_output)

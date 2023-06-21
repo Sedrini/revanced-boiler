@@ -1,13 +1,12 @@
 import PySimpleGUI as sg
 import os
 import json
-from GUITOOLS.Choose_file import seleccionar_archivo
+from tkinter import filedialog
+from tkinter import *
+import webbrowser
 from GUITOOLS.patcher import pathcer_name
 from GUITOOLS.download_files import check_files, create_folder
-from GUITOOLS.Api_info import check_update3,read_compatible_version, write_json_profile
-from GUITOOLS.ping import estatus
-from GUITOOLS.pathz import paths
-import webbrowser
+from GUITOOLS.Api_info import check_update3,read_compatible_version, write_json_profile,estatus, paths
 
 # Layout target version
 def update_layout(window, selected_option,_):
@@ -73,10 +72,9 @@ def apk_name(option, profile):
             i = i+1
             i = str(i)
             name_apk = i+name_apk
-            print(i)
         else:
             pass
-        
+        i = str(i)
         temp_name = i+temp_name       
 
         pathcer_name(option, file, temp_name, profile)
@@ -84,6 +82,7 @@ def apk_name(option, profile):
 def main():
     create_folder()
     def layu():
+
         compatible = read_compatible_version()
         estatos = estatus()
 
@@ -136,6 +135,9 @@ def main():
     # Crea la ventana de la GUI
     window = sg.Window("Revanced - Boiler",layout,size=(500, 350))
 
+
+    
+
     # Bucle principal para interactuar con la GUI
     while True:
         event, values = window.read()
@@ -146,14 +148,21 @@ def main():
             
         
         elif event == '-patch-':
-            profile = values['profile']
-            selected_option = values['dropdown']
-            if selected_option == '':
-                None
-            if profile == '':
-                None
+            folders = paths()
+            tools_folder= folders[3]
+
+            if check_first_start(tools_folder):
+                sg.popup("must click update button first (before patch)")
             else:
-                apk_name(selected_option, profile)
+
+                profile = values['profile']
+                selected_option = values['dropdown']
+                if selected_option == '':
+                    None
+                if profile == '':
+                    None
+                else:
+                    apk_name(selected_option, profile)
 
         elif event == 'update':
             estatos = estatus()
@@ -468,6 +477,24 @@ def profiles_screen():
     # Cierra la ventana y finaliza el programa
     window.close()
 
+def seleccionar_archivo():
+    root = Tk()
+    root.withdraw()
+    root.attributes("-topmost", True)  # Set the window attributes to stay on top
+    archivo = filedialog.askopenfilename(filetypes=(("Archivos apk", "*.apk"),))
+    root.destroy()  # Destroy the window after selecting the file
+    return archivo
+
+def check_first_start(tools_folder):
+    
+    if not os.path.isdir(tools_folder):
+        return False
+    
+    content = os.listdir(tools_folder)
+    if len (content) < 2:
+        return True
+
+    return False
 
 
 if __name__ == '__main__':

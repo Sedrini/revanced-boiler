@@ -3,9 +3,7 @@ from tqdm import *
 import os
 import win32api
 import PySimpleGUI as sg
-from Api_info import download_url,write_json
-from pathz import paths
-from ping import estatus
+from Api_info import download_url,write_json,estatus, paths
 
 
 def download_files():

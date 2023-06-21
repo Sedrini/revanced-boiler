@@ -1,17 +1,27 @@
 import os
 import json
 import requests
-
 import sys
+from pathlib import Path
 # Obtener el directorio actual donde se encuentra el archivo en ejecución
 current_directory = os.path.dirname(os.path.abspath(__file__))
 # Agregar el directorio actual al PYTHONPATH
 sys.path.append(current_directory)
 # Ahora puedes importar el módulo 'Api_response'
-from pathz import paths
 
 
+def paths():
+    documents_folder = Path(os.environ["USERPROFILE"]) / "Documents" / "Revanced_Boiler"
+    patched_folder = documents_folder / "Patched_apk"
+    json_file = documents_folder / "Info.json"
+    tools_folder = documents_folder / 'Tools'
+    profile_folder = documents_folder / 'Profiles'
+    default_json = profile_folder / 'default.json'
+    custom_json = profile_folder / 'custom.json'
 
+
+    folder = [json_file,documents_folder,patched_folder,tools_folder, profile_folder, default_json,custom_json]
+    return folder
 
 def api_requests():
     try:
@@ -221,3 +231,17 @@ def write_json_profile():
 
     with open(f"{custom_json}", "w") as outfile:
         json.dump({"": data}, outfile, indent=2)
+
+def estatus():
+
+    timeout = 1
+
+    try:
+        requests.head("http://www.google.com/", timeout=timeout)
+        # Do something
+        estatus = 'Online'
+    except requests.ConnectionError:
+        # Do something
+        estatus = 'Offline'
+
+    return estatus
