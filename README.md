@@ -9,7 +9,6 @@ project pysimplegui - Build apps with revanced patches.
 
 Demo
 
-Need to change the add a '1' before the apk name if the file alredy exist, it look ugly so many 1
 
 [test.webm](https://github.com/Sedrini/revanced-boiler/assets/36553765/1f7e23fe-aa92-4958-9d31-e5d74cef1376)
 
