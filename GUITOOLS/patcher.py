@@ -2,7 +2,6 @@ import PySimpleGUI as sg
 import subprocess
 import threading
 from GUITOOLS.Api_info import download_url,paths
-import os
 import json
 
 
@@ -61,13 +60,13 @@ def pathcer_name(option, file, name_apk, profile):
         if option in command_map:
             command = command_map[option]
             comend = f"cd /d {Tools_folder} && {command}"
-            run_command_gui(comend, name_apk, patched_folder)
+            run_command_gui(comend)
             show_custom_popup(name_apk,patched_folder)
         else:
             None
 
 def custom_patch(option, file, name_apk, profile,apk_output):
-
+    file_list = download_url()[6]
     folders = paths()
     Tools_folder = folders[3]
     patched_folder= folders[2]
@@ -77,10 +76,10 @@ def custom_patch(option, file, name_apk, profile,apk_output):
         data = json.load(filu)
 
     command_parts = [
-    f'cd /d {Tools_folder} && java -jar ReVanced-cliv2.21.3.jar',
+    f'cd /d {Tools_folder} && java -jar {file_list[1]}',
     f'-a {file}',
-    '-b Revanced-patchesv2.177.0.jar',
-    '-m ReVanced-integrationsv0.110.0.apk',
+    f'-b {file_list[0]}',
+    f'-m {file_list[2]}',
     f'-o {apk_output}',
     '-c']
     
@@ -196,14 +195,14 @@ def custom_patch(option, file, name_apk, profile,apk_output):
 
     command = ' '.join(command_parts)
     try:
-        run_command_gui(command, name_apk, patched_folder)
+        run_command_gui(command)
         show_custom_popup(name_apk,patched_folder)
     except:
         None
 
     None
 
-def run_command_gui(command, name_apk, patched_folder):
+def run_command_gui(command):
     
     try:
         process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)

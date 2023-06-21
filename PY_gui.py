@@ -99,7 +99,7 @@ def main():
             [sg.Menu(menu_layout)],
             [sg.Column([
                 [sg.Text("version 1.5", pad=((0, 0), (0, 0)),background_color='#b4eeb4', ),
-                 sg.Text("  Revanced | Boiler ", font='Helvetica', pad=((80, 89), (0, 0)),), 
+                 sg.Text("  Revanced | Builder ", font='Helvetica', pad=((80, 80), (0, 0)),), 
                  sg.Text(f"Status: {estatos}", )],
                 
                 [sg.Text('Application', pad=((0, 0), (30, 0)),font=('Verdana', 11)), 
@@ -258,6 +258,7 @@ def profiles_screen():
         pass
     else: 
         write_json_profile()
+        
 
     # NO te the most clean, but it should work
     config = read_config_from_json(custom_json)
