@@ -7,14 +7,13 @@ from Api_info import download_url,write_json,estatus, paths
 
 
 def download_files():
-    documents_folder = paths()[1]
-    patches_url, patches_name, cli_url, cli_name, integrations_url, integrations_name, file_list = download_url()
+    tools_folder = paths()[3]
+    patches_url, patches_name, cli_url, cli_name, integrations_url, integrations_name, _ = download_url()
 
-    documents_folder = documents_folder / 'Tools'
     downloads = [
-        (patches_url, documents_folder, patches_name + '.jar'),
-        (cli_url, documents_folder, cli_name + '.jar'),
-        (integrations_url, documents_folder, integrations_name + '.apk'),
+        (patches_url, tools_folder, patches_name + '.jar'),
+        (cli_url, tools_folder, cli_name + '.jar'),
+        (integrations_url, tools_folder, integrations_name + '.apk'),
     ]
 
     for url, path, filename in downloads:
@@ -26,7 +25,7 @@ def download_files():
                 bytes_downloaded = 0
 
                 layout = [
-                    [sg.Text('Progreso de descarga:')],
+                    [sg.Text('Downloading....')],
                     [sg.ProgressBar(max_value=file_size, orientation='h', size=(30, 20), key='-PROGRESS-')],
                 ]
 
@@ -44,40 +43,7 @@ def download_files():
                 window.close()
 
     sg.popup('Descarga completada', 'Archivos',patches_name,cli_name,integrations_name)
-
-def download_one_file(url,ext):
-    documents_folder = paths()[1]
-
-    documents_folder = documents_folder / 'Tools'
-    downloads = [
-        (url, documents_folder, ext),
-    ]
-
-    for url, path, filename in downloads:
-        full_path = os.path.join(path, filename)
-        with requests.get(url, stream=True) as r:
-            r.raise_for_status()
-            with open(full_path, 'wb') as f:
-                file_size = int(r.headers['Content-Length'])
-                bytes_downloaded = 0
-
-                layout = [
-                    [sg.Text('Progreso de descarga:')],
-                    [sg.ProgressBar(max_value=file_size, orientation='h', size=(30, 20), key='-PROGRESS-')],
-                ]
-
-                window = sg.Window('Descarga de archivos', layout, finalize=True)
-
-                for chunk in r.iter_content(chunk_size=8192):
-                    if chunk:
-                        f.write(chunk)
-                        bytes_downloaded += len(chunk)
-                        window['-PROGRESS-'].Update(bytes_downloaded)
-                        window.refresh()
-
-                window.close()
-
-    sg.popup('Descarga completada', 'Archivo descargado:', filename)
+    return downloads
 
 def check_files():
     create_folder()
@@ -113,6 +79,6 @@ def create_folder():
 
     
     if not os.path.exists(json_file):
-        write_json()
+        write_json('2')
 
 

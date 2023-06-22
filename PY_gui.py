@@ -1,12 +1,11 @@
 import PySimpleGUI as sg
 import os
 import json
-from tkinter import filedialog
-from tkinter import *
 import webbrowser
-from GUITOOLS.patcher import pathcer_name
+
+from GUITOOLS.patcher import apk_name
 from GUITOOLS.download_files import check_files, create_folder
-from GUITOOLS.Api_info import check_update3,read_compatible_version, write_json_profile,estatus, paths
+from GUITOOLS.Api_info import read_compatible_version, estatus, paths,write_json,check_update3
 
 # Layout target version
 def update_layout(window, selected_option,_):
@@ -46,38 +45,6 @@ def update_layout(window, selected_option,_):
         window['-ymusic-'].update(visible=False)
         window['-Twitch-'].update(visible=False)
         window['-Youtube-'].update(visible=False)
-
-def apk_name(option, profile):
-    file = seleccionar_archivo()
-    folders = paths()
-    patched_folder= folders[2]
-
-    i = 1
-
-    if file == "":
-        sg.popup('EMPTY FILE')
-    else:   
-        if option == 'Youtube': name_apk = 'ReYoutube.apk' 
-        if option == 'Youtube Music': name_apk = 'ReInstagram.apk'
-        if option == 'Tiktok': name_apk = 'ReTikTok.apk'
-        if option == 'Twitter': name_apk = 'ReTwitter.apk'
-        if option == 'Twitch': name_apk = 'ReTwitch.apk'
-        if option == 'Other': name_apk = 'ReCustom.apk'
-        if option == '': None
-
-        temp_name = name_apk
-
-        while os.path.exists(patched_folder / name_apk):
-            i = int(i)
-            i = i+1
-            i = str(i)
-            name_apk = i+name_apk
-        else:
-            pass
-        i = str(i)
-        temp_name = i+temp_name       
-
-        pathcer_name(option, file, temp_name, profile)
 
 def main():
     create_folder()
@@ -190,7 +157,7 @@ def main():
              webbrowser.open(url)
 
         elif event == '-Youtube':
-            profiles_screen()
+            custon_youtube()
 
 
     # Cierra la ventana y finaliza el programa
@@ -251,13 +218,13 @@ def read_config_from_json(custom_json):
         config = json.load(file)
     return config
 
-def profiles_screen():
+def custon_youtube():
     path = paths()
     custom_json = path[6]
     if os.path.exists(custom_json):
         pass
     else: 
-        write_json_profile()
+        write_json('1')
         
 
     # NO te the most clean, but it should work
@@ -300,7 +267,8 @@ def profiles_screen():
                 [sg.Checkbox("hide-filter-bar", key='-hide-filter-bar'),
                 sg.Checkbox("hide-floating-microphone-button", key='-hide-floating-microphone-button')],
                 [sg.Checkbox("hide-info-cards", key='-hide-info-cards'),
-                sg.Checkbox("hide-load-more-button", key='-hide-load-more-button')],
+                sg.Checkbox("hide-load-more-button", key='-hide-load-more-button'),
+                sg.Checkbox("hide-layout-comp",key='-hide-layout-components')],
                 [sg.Checkbox("hide-player-buttons", key='-hide-player-buttons'),
                 sg.Checkbox("hide-player-overlay", key='-hide-player-overlay'),
                 sg.Checkbox("hide-seekbar", key='-hide-seekbar')],
@@ -367,6 +335,7 @@ def profiles_screen():
     window["-hide-filter-bar"].update(value=config.get("hide-filter-bar", False))
     window["-hide-floating-microphone-button"].update(value=config.get("hide-floating-microphone-button", False))
     window["-hide-info-cards"].update(value=config.get("hide-info-cards", False))
+    window["-hide-layout-components"].update(value=config.get("hide-layout-comp",False))
     window["-hide-load-more-button"].update(value=config.get("hide-load-more-button", False))
     window["-hide-player-buttons"].update(value=config.get("hide-player-buttons", False))
     window["-hide-player-overlay"].update(value=config.get("hide-player-overlay", False))
@@ -431,6 +400,7 @@ def profiles_screen():
             config["hide-filter-bar"] = values["-hide-filter-bar"]
             config["hide-floating-microphone-button"] = values["-hide-floating-microphone-button"]
             config["hide-info-cards"] = values["-hide-info-cards"]
+            config["hide-layout-comp"]= values["-hide-layout-components"]
             config["hide-load-more-button"] = values["-hide-load-more-button"]
             config["hide-player-buttons"] = values["-hide-player-buttons"]
             config["hide-player-overlay"] = values["-hide-player-overlay"]
@@ -477,14 +447,6 @@ def profiles_screen():
 
     # Cierra la ventana y finaliza el programa
     window.close()
-
-def seleccionar_archivo():
-    root = Tk()
-    root.withdraw()
-    root.attributes("-topmost", True)  # Set the window attributes to stay on top
-    archivo = filedialog.askopenfilename(filetypes=(("Archivos apk", "*.apk"),))
-    root.destroy()  # Destroy the window after selecting the file
-    return archivo
 
 def check_first_start(tools_folder):
     

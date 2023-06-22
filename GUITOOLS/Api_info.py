@@ -9,6 +9,19 @@ current_directory = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(current_directory)
 # Ahora puedes importar el módulo 'Api_response'
 
+def estatus():
+
+    timeout = 1
+
+    try:
+        requests.head("http://www.google.com/", timeout=timeout)
+        # Do something
+        estatus = 'Online'
+    except requests.ConnectionError:
+        # Do something
+        estatus = 'Offline'
+
+    return estatus
 
 def paths():
     documents_folder = Path(os.environ["USERPROFILE"]) / "Documents" / "Revanced_Boiler"
@@ -34,8 +47,8 @@ def api_requests():
 def compatible_version():
     response_patches = api_requests()[0]
     youtube_version = response_patches[0]['compatiblePackages'][0]['versions'][1]
-    twitch_version = response_patches[3]['compatiblePackages'][0]['versions'][5]
-    youtubemusic_version = response_patches[6]['compatiblePackages'][0]['versions'][16]
+    twitch_version = response_patches[3]['compatiblePackages'][0]['versions'][0]
+    youtubemusic_version = response_patches[6]['compatiblePackages'][0]['versions']
     instagram_version = response_patches[65]['compatiblePackages'][0]['versions'][0]
     twitter_version = response_patches[68]['compatiblePackages'][0]['versions'][1]
 
@@ -96,60 +109,78 @@ def download_url():
 
     return patches_url, patches_name, cli_url, cli_name, integrations_url, integrations_name, file_list
 
-def write_json():
-    write_json_profile()
+def write_json(option):
     compatible = compatible_version()
     response_tools = api_requests()[1]
     folders = paths()
     json_file = folders[0]
+    
+    
+        
+    def write_json_profile():
+        custom_json = folders[6]
 
+        
+        data = [
+            {
+        "always-autorepeat": False,
+
+    }
+        ]
+
+        with open(f"{custom_json}", "w") as outfile:
+            json.dump({"": data}, outfile, indent=2)
+
+    if option == '1':
+        write_json_profile()
+    else:
+        write_json_profile()
     #PATCHES
-    patches_down = response_tools['tools'][2]['browser_download_url']              #Download Patches .Jar
-    patches_version = response_tools['tools'][2]['version'] 
-    #CLI 
-    cli_down = response_tools['tools'][5]['browser_download_url'] 
-    cli_version = response_tools['tools'][5]['version']     
-    #Integrations 
-    integrations_down = response_tools['tools'][3]['browser_download_url']
-    integrations_version = response_tools['tools'][3]['version']   
+        patches_down = response_tools['tools'][2]['browser_download_url']              #Download Patches .Jar
+        patches_version = response_tools['tools'][2]['version'] 
+        #CLI 
+        cli_down = response_tools['tools'][5]['browser_download_url'] 
+        cli_version = response_tools['tools'][5]['version']     
+        #Integrations 
+        integrations_down = response_tools['tools'][3]['browser_download_url']
+        integrations_version = response_tools['tools'][3]['version']   
 
 
-    # INFO IS GOING TO BE TO JSON FILE
-    compatible = compatible_version()
-    cc = compatible
-    data = [
-    {
-        "title": "Revanced-patches",
-        "version": patches_version,
-        "url": patches_down,
-        "source_url": ""
-      },
-      {
-        "title": "ReVanced-cli",
-        "version": cli_version,
-        "url": cli_down,
-        "source_url": ""
-      },
-      {
-       "title": "ReVanced-integrations",
-        "version": integrations_version,
-        "url": integrations_down,
-        "source_url": ""
-      },
-      {
-        "title": "compatiblePackages",
-        "youtube": compatible[0],
-        "twitch": compatible[1],
-        "youtube_music": compatible[2],
-        "instagram_version": compatible[3],
-        "twitter_version": compatible[4],
-      },
-]
-    
-    with open(f"{json_file}", "w") as outfile:
-        json.dump({"INFO": data}, outfile, indent=2)
-    
-    return patches_version
+        # INFO IS GOING TO BE TO JSON FILE
+        compatible = compatible_version()
+        data = [
+        {
+            "title": "Revanced-patches",
+            "version": patches_version,
+            "url": patches_down,
+            "source_url": ""
+        },
+        {
+            "title": "ReVanced-cli",
+            "version": cli_version,
+            "url": cli_down,
+            "source_url": ""
+        },
+        {
+        "title": "ReVanced-integrations",
+            "version": integrations_version,
+            "url": integrations_down,
+            "source_url": ""
+        },
+        {
+            "title": "compatiblePackages",
+            "youtube": compatible[0],
+            "twitch": compatible[1],
+            "youtube_music": compatible[2],
+            "instagram_version": compatible[3],
+            "twitter_version": compatible[4],
+        },
+    ]
+        
+        with open(f"{json_file}", "w") as outfile:
+            json.dump({"INFO": data}, outfile, indent=2)
+        
+        return patches_version
 
 def delete_old_files(blabla):
     #revanced-patches','ReVanced-integrations','ReVanced-cliv
@@ -174,18 +205,14 @@ def delete_old_files(blabla):
 
 def check_update3():
     response_tools = api_requests()[1]
-    
     patches_version_online = response_tools['tools'][2]['version']
-    patches_url = response_tools['tools'][2]['browser_download_url']              #Download Patches .Jar
-    cli_url = response_tools['tools'][5]['browser_download_url']
     cli_version_online = response_tools['tools'][5]['version']
     integrations_version_online = response_tools['tools'][3]['version']
-    integrations_url = response_tools['tools'][3]['browser_download_url']
-
+    
     c = 1
     folders = paths()
     json_file = folders[0]
-    while c > 2:
+    while c < 3:
         try:
             with open(json_file) as f:
                 data = json.load(f)
@@ -196,11 +223,11 @@ def check_update3():
                 cli_version = data['INFO'][1]['version']
                 integrations_version = data['INFO'][2]['version']
                 integrations_title = data['INFO'][2]['title']
-
+                #print(patches_version_online, patches_version )
 
             if patches_version_online != patches_version: 
                 delete_old_files(patches_title)
-                write_json()
+                write_json('2')
             
             if cli_version_online != cli_version: 
                 delete_old_files(cli_title)
@@ -210,38 +237,8 @@ def check_update3():
                 delete_old_files(integrations_title)
 
         except:
-            write_json()
+            write_json('2')
         
         c = c+1
 
-def write_json_profile():
 
-    compatible = compatible_version()
-    response_tools = api_requests()[1]
-    folders = paths()
-    custom_json = folders[6]
-
-    
-    data = [
-        {
-    "always-autorepeat": False,
-
-}
-    ]
-
-    with open(f"{custom_json}", "w") as outfile:
-        json.dump({"": data}, outfile, indent=2)
-
-def estatus():
-
-    timeout = 1
-
-    try:
-        requests.head("http://www.google.com/", timeout=timeout)
-        # Do something
-        estatus = 'Online'
-    except requests.ConnectionError:
-        # Do something
-        estatus = 'Offline'
-
-    return estatus

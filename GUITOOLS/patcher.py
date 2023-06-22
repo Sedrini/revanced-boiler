@@ -1,9 +1,11 @@
 import PySimpleGUI as sg
 import subprocess
 import threading
+import os
 from GUITOOLS.Api_info import download_url,paths
 import json
-
+from tkinter import filedialog
+from tkinter import *
 
 
 def show_custom_popup(name_apk,patched_folder):
@@ -29,6 +31,46 @@ def show_custom_popup(name_apk,patched_folder):
             
 
         window.close()
+
+def seleccionar_archivo():
+    root = Tk()
+    root.withdraw()
+    root.attributes("-topmost", True)  # Set the window attributes to stay on top
+    archivo = filedialog.askopenfilename(filetypes=(("Archivos apk", "*.apk"),))
+    root.destroy()  # Destroy the window after selecting the file
+    return archivo
+
+def apk_name(option, profile):
+    file = seleccionar_archivo()
+    folders = paths()
+    patched_folder= folders[2]
+
+    i = 1
+
+    if file == "":
+        sg.popup('EMPTY FILE')
+    else:   
+        if option == 'Youtube': name_apk = 'ReYoutube.apk' 
+        if option == 'Youtube Music': name_apk = 'ReInstagram.apk'
+        if option == 'Tiktok': name_apk = 'ReTikTok.apk'
+        if option == 'Twitter': name_apk = 'ReTwitter.apk'
+        if option == 'Twitch': name_apk = 'ReTwitch.apk'
+        if option == 'Other': name_apk = 'ReCustom.apk'
+        if option == '': None
+
+        temp_name = name_apk
+
+        while os.path.exists(patched_folder / name_apk):
+            i = int(i)
+            i = i+1
+            i = str(i)
+            name_apk = i+name_apk
+        else:
+            pass
+        i = str(i)
+        temp_name = i+temp_name       
+
+        pathcer_name(option, file, temp_name, profile)
 
 def pathcer_name(option, file, name_apk, profile):
     #RETURNS
