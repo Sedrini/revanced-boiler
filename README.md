@@ -4,11 +4,10 @@ project pysimplegui - Build apps with revanced patches.
 -custom youtube patches available
 
 
-![image](https://github.com/Sedrini/revanced-boiler/assets/36553765/7a979bc4-1e79-4a83-b1b4-4001c0311b47)
+![image](https://github.com/Sedrini/revanced-boiler/assets/36553765/431d5cb9-cdab-4ced-8620-85088364e3bf)
 
 
 Demo
 
-
-[test.webm](https://github.com/Sedrini/revanced-boiler/assets/36553765/1f7e23fe-aa92-4958-9d31-e5d74cef1376)
+[2023-06-22 04-38-43(1).webm](https://github.com/Sedrini/revanced-boiler/assets/36553765/f194e090-6674-49d9-8713-a7a82aca7aae)
 
