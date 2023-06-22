@@ -46,6 +46,8 @@ def update_layout(window, selected_option,_):
         window['-Twitch-'].update(visible=False)
         window['-Youtube-'].update(visible=False)
 
+
+
 def main():
     create_folder()
     def layu():
@@ -55,22 +57,22 @@ def main():
 
         menu_layout = [
         ['Revanced', ['revanced.app']],
-        ['Apkmirror', ['-youtube']],
+        ['Apkmirror', ['-youtube', '-Tiktok', '-Instagram']],
         ['Config', ['-Youtube']]
         ]
 
         options = ['','Youtube', 'Youtube Music','Tiktok','Twitter', 'Twitch', 'Other' ]
-        profiles = ['','Default', 'Custom']
-
+        profiles = ['','Default', 'Custom']  
+            
         layout = [
             [sg.Menu(menu_layout)],
             [sg.Column([
-                [sg.Text("version 1.5", pad=((0, 0), (0, 0)),background_color='#b4eeb4', ),
-                 sg.Text("  Revanced | Builder.py ", font='Helvetica', pad=((80, 80), (0, 0)),), 
+                [sg.Text("version 1.6", pad=((0, 0), (0, 0)),background_color='#b4eeb4', ),
+                 sg.Text("Revanced | Builder.py ", font='Helvetica', pad=((70, 80), (0, 0)),), 
                  sg.Text(f"Status: {estatos}", )],
                 
                 [sg.Text('Application', pad=((0, 0), (30, 0)),font=('Verdana', 11)), 
-                sg.DropDown(options, key='dropdown', size=(13, 1), enable_events=True, pad=((20, 0), (30, 0)),background_color='#f5f5dc'  ),
+                sg.DropDown(options, key='-dropdown', size=(13, 1), enable_events=True, pad=((20, 0), (30, 0)),background_color='#f5f5dc'  ),
                 sg.Text('Target Version: ', pad=((70, 0), (20, 0)),  border_width=10),
                 sg.Text(compatible[0], key='-Youtube-',visible=False, pad=((0, 0), (20, 0)),  border_width=10),
                 sg.Text(compatible[1], key='-Twitch-',visible=False, pad=((0, 0), (20, 0)),  border_width=10),
@@ -79,8 +81,8 @@ def main():
                 sg.Text(compatible[4], key='-twitter-',visible=False, pad=((0, 0), (20, 0)),  border_width=10),
                 ],
 
-                [sg.Text('   Profile    ', pad=((0, 0), (30, 0)),font=('Verdana', 11)), 
-                sg.DropDown(profiles, key='profile', size=(13, 1), pad=((20, 0), (30, 0)),background_color='#f5f5dc'),
+                [sg.Text('Profile', pad=((15, 0), (30, 0)),font=('Verdana', 11)), 
+                sg.DropDown(profiles, key='profile', size=(13, 1), pad=((39, 0), (30, 0)),background_color='#f5f5dc',enable_events=True),
                 ],
 
                 [sg.Button('Patch',font=('Arial', 11),size=(7, 1),auto_size_button=True,button_color =('#000000','#6fcb9f'), enable_events=True, key='-patch-', pad=((10, 0), (40, 0))),
@@ -93,6 +95,8 @@ def main():
             ]
 
         return layout
+
+    
 
     # Define el diseño de la GUI
     sg.theme('LightGreen')
@@ -108,13 +112,11 @@ def main():
     # Bucle principal para interactuar con la GUI
     while True:
         event, values = window.read()
-
         # Si se cierra la ventana o se presiona el botón "Cancelar", finaliza el programa
         if event == sg.WINDOW_CLOSED or event == "Cancelar":
             break
-            
-        
         elif event == '-patch-':
+            print('ola')
             folders = paths()
             tools_folder= folders[3]
 
@@ -123,7 +125,7 @@ def main():
             else:
 
                 profile = values['profile']
-                selected_option = values['dropdown']
+                selected_option = values['-dropdown']
                 if selected_option == '':
                     None
                 if profile == '':
@@ -142,25 +144,41 @@ def main():
                 except:
                     sg.popup('No internet?')
 
-        elif event in ('dropdown') and ('profile'):
-            selected_app = values['dropdown']
+        elif event == '-Youtube':
+            custon_youtube()
+
+        elif event in ('-dropdown') and ('profile'):
+            selected_app = values['-dropdown']
             selected_profile = values['profile']
+            if selected_app != 'Youtube':
+                new = ['','Default']
+                window['profile'].update(values=new)
 
             update_layout(window, selected_app,selected_profile)
+        
+        
 
+               
+
+    
+#Open apk_mirror links
         elif event == '-youtube':
              url = 'https://www.apkmirror.com/apk/google-inc/youtube/youtube-18-19-35-release/youtube-18-19-35-android-apk-download/'  # Reemplaza con la URL de la página que deseas abrir
              webbrowser.open(url)
 
-        elif event == 'revanced.app':
-             url = 'https://revanced.app/'  # Reemplaza con la URL de la página que deseas abrir
+        elif event == '-Tiktok':
+             url = 'https://www.apkmirror.com/apk/tiktok-pte-ltd/tik-tok-including-musical-ly/tik-tok-including-musical-ly-29-9-4-release/tiktok-29-9-4-2-android-apk-download/'  
              webbrowser.open(url)
 
-        elif event == '-Youtube':
-            custon_youtube()
+        elif event == '-Instagram':
+            url = 'https://www.apkmirror.com/apk/instagram/instagram-instagram/instagram-instagram-275-0-0-27-98-release/instagram-275-0-0-27-98-19-android-apk-download/'  
+            webbrowser.open(url)
+             
+        elif event == 'revanced.app':
+             url = 'https://revanced.app/'  
+             webbrowser.open(url)
 
-
-    # Cierra la ventana y finaliza el programa
+ 
     window.close()
 
 def config_screen():   
