@@ -66,7 +66,7 @@ def main():
             [sg.Menu(menu_layout)],
             [sg.Column([
                 [sg.Text("version 1.5", pad=((0, 0), (0, 0)),background_color='#b4eeb4', ),
-                 sg.Text("  Revanced | Builder ", font='Helvetica', pad=((80, 80), (0, 0)),), 
+                 sg.Text("  Revanced | Builder.py ", font='Helvetica', pad=((80, 80), (0, 0)),), 
                  sg.Text(f"Status: {estatos}", )],
                 
                 [sg.Text('Application', pad=((0, 0), (30, 0)),font=('Verdana', 11)), 
@@ -75,7 +75,7 @@ def main():
                 sg.Text(compatible[0], key='-Youtube-',visible=False, pad=((0, 0), (20, 0)),  border_width=10),
                 sg.Text(compatible[1], key='-Twitch-',visible=False, pad=((0, 0), (20, 0)),  border_width=10),
                 sg.Text(compatible[2], key='-ymusic-',visible=False, pad=((0, 0), (20, 0)),  border_width=10),
-                sg.Text('All :) ', key='-tiktok-',visible=False, pad=((0, 0), (20, 0)),  border_width=10),
+                sg.Text('All  ', key='-tiktok-',visible=False, pad=((0, 0), (20, 0)),  border_width=10),
                 sg.Text(compatible[4], key='-twitter-',visible=False, pad=((0, 0), (20, 0)),  border_width=10),
                 ],
 
