@@ -49,8 +49,8 @@ def compatible_version():
     youtube_version = response_patches[0]['compatiblePackages'][0]['versions'][1]
     twitch_version = response_patches[3]['compatiblePackages'][0]['versions'][0]
     youtubemusic_version = response_patches[6]['compatiblePackages'][0]['versions']
-    instagram_version = response_patches[65]['compatiblePackages'][0]['versions'][0]
-    twitter_version = response_patches[68]['compatiblePackages'][0]['versions'][1]
+    instagram_version = response_patches[66]['compatiblePackages'][0]['versions'][0]
+    twitter_version = response_patches[69]['compatiblePackages'][0]['versions'][1]
 
 
     compatible = [youtube_version,twitch_version,youtubemusic_version,instagram_version,twitter_version]
