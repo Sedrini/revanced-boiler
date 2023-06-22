@@ -153,6 +153,10 @@ def main():
             if selected_app != 'Youtube':
                 new = ['','Default']
                 window['profile'].update(values=new)
+            elif selected_app == 'Youtube':
+                new = ['','Default', 'Custom']
+                window['profile'].update(values=new)
+            
 
             update_layout(window, selected_app,selected_profile)
         
