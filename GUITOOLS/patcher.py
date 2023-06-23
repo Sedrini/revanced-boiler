@@ -45,7 +45,7 @@ def apk_name(option, profile):
     folders = paths()
     patched_folder= folders[2]
 
-    i = 1
+    
 
     if file == "":
         sg.popup('EMPTY FILE')
@@ -60,17 +60,24 @@ def apk_name(option, profile):
 
         temp_name = name_apk
 
-        while os.path.exists(patched_folder / name_apk):
-            i = int(i)
-            i = i+1
-            i = str(i)
-            name_apk = i+name_apk
-        else:
-            pass
-        i = str(i)
-        temp_name = i+temp_name       
+        i = 1
+        if os.path.exists(patched_folder / name_apk ):
+            while os.path.exists(patched_folder / name_apk):
+                print('exist')
+                i = int(i)
+                i = i+1
+                i = str(i)
+                name_apk = i+name_apk
+            if not os.path.exists(patched_folder / name_apk):
+                i = str(i)
+                temp_name = i+temp_name       
+                pathcer_name(option, file, temp_name, profile)
+        elif not os.path.exists(patched_folder / name_apk):
+            pathcer_name(option, file, name_apk, profile)
 
-        pathcer_name(option, file, temp_name, profile)
+
+        
+        
 
 def pathcer_name(option, file, name_apk, profile):
     #RETURNS
@@ -95,7 +102,7 @@ def pathcer_name(option, file, name_apk, profile):
             'Tiktok': f"java -jar {file_list[1]} --exclusive --experimental -a {file} -b {file_list[0]} -m {file_list[2]} -i feed-filter -i hide-ads -i playback-speed -i settings -i show-seekbar -i sim-spoof -o {apk_output} -c",
             'Twitter': f"java -jar {file_list[1]} -a {file} -b {file_list[0]} -m {file_list[2]}  -o {apk_output} -c",
             'Twitch': f"java -jar {file_list[1]} -a {file} -b {file_list[0]} -m {file_list[2]}  -o {apk_output} -c",
-            'Other': f"java -jar {file_list[1]} -a {file} -b {file_list[0]} -m {file_list[2]}  -o {apk_output} -c"
+            'Other': f'java -jar {file_list[1]} -a "{file}" -b {file_list[0]} -m {file_list[2]} -i change-oauth-client-id  -o {apk_output} -c'
         }
 
         # Check if the option is valid and get the corresponding command
@@ -275,7 +282,7 @@ def run_command_gui(command):
             
             if process.poll() is not None:
                 # El proceso ha terminado
-                break
+                window['Cerrar'].update(disabled=True)
         
    
         
