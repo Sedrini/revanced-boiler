@@ -61,14 +61,14 @@ def main():
         ['Config', ['-Youtube']]
         ]
 
-        options = ['','Youtube', 'Youtube Music','Tiktok','Twitter', 'Twitch', 'Other' ]
+        options = ['','Youtube', 'Youtube Music','Tiktok','Twitter', 'Twitch','3er-Reddit', 'Other' ]
         profiles = ['','Default', 'Custom']  
             
         layout = [
             [sg.Menu(menu_layout)],
             [sg.Column([
-                [sg.Text("version 1.6", pad=((0, 0), (0, 0)),background_color='#b4eeb4', ),
-                 sg.Text("Revanced | Builder.py ", font='Helvetica', pad=((70, 80), (0, 0)),), 
+                [sg.Text("version 1.6.1", pad=((0, 0), (0, 0)),background_color='#b4eeb4', ),
+                 sg.Text("Revanced | Builder.py ", font='Helvetica', pad=((60, 80), (0, 0)),), 
                  sg.Text(f"Status: {estatos}", )],
                 
                 [sg.Text('Application', pad=((0, 0), (30, 0)),font=('Verdana', 11)), 
@@ -160,10 +160,6 @@ def main():
 
             update_layout(window, selected_app,selected_profile)
         
-        
-
-               
-
     
 #Open apk_mirror links
         elif event == '-youtube':
@@ -248,15 +244,11 @@ def custon_youtube():
     else: 
         write_json('1')
         
-
     # NO te the most clean, but it should work
     config = read_config_from_json(custom_json)
 
     
     def layut():
-        
-  
-
         config = read_config_from_json(custom_json)
 
         layout = [

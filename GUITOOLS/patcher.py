@@ -51,11 +51,14 @@ def apk_name(option, profile):
         sg.popup('EMPTY FILE')
     else:   
         if option == 'Youtube': name_apk = 'ReYoutube.apk' 
-        if option == 'Youtube Music': name_apk = 'ReInstagram.apk'
+        if option == 'Youtube Music': name_apk = 'ReYoutube Music.apk'
         if option == 'Tiktok': name_apk = 'ReTikTok.apk'
         if option == 'Twitter': name_apk = 'ReTwitter.apk'
         if option == 'Twitch': name_apk = 'ReTwitch.apk'
         if option == 'Other': name_apk = 'ReCustom.apk'
+        if option == '3er-Reddit': name_apk = 'Re3er-Reddit.apk'
+
+
         if option == '': None
 
         temp_name = name_apk
@@ -74,10 +77,6 @@ def apk_name(option, profile):
                 pathcer_name(option, file, temp_name, profile)
         elif not os.path.exists(patched_folder / name_apk):
             pathcer_name(option, file, name_apk, profile)
-
-
-        
-        
 
 def pathcer_name(option, file, name_apk, profile):
     #RETURNS
@@ -98,17 +97,19 @@ def pathcer_name(option, file, name_apk, profile):
 
         command_map = {
             'Youtube': f"java -jar {file_list[1]} -a {file} -b {file_list[0]} -m {file_list[2]} -e always-autorepeat -e custom-video-buffer -e debugging -e downloads -e hide-my-mix -o {apk_output} -c",
-            'Youtube Music': f"java -jar {file_list[1]} -a {file} -b {file_list[0]} -m {file_list[2]} -o {apk_output} -c",
+            'Youtube Music': f'java -jar {file_list[1]} -a "{file}" -b {file_list[0]} -m {file_list[2]}  -o "{apk_output}" -c',
             'Tiktok': f"java -jar {file_list[1]} --exclusive --experimental -a {file} -b {file_list[0]} -m {file_list[2]} -i feed-filter -i hide-ads -i playback-speed -i settings -i show-seekbar -i sim-spoof -o {apk_output} -c",
             'Twitter': f"java -jar {file_list[1]} -a {file} -b {file_list[0]} -m {file_list[2]}  -o {apk_output} -c",
             'Twitch': f"java -jar {file_list[1]} -a {file} -b {file_list[0]} -m {file_list[2]}  -o {apk_output} -c",
-            'Other': f'java -jar {file_list[1]} -a "{file}" -b {file_list[0]} -m {file_list[2]} -i change-oauth-client-id  -o {apk_output} -c'
+            '3er-Reddit': f'java -jar {file_list[1]} --exclusive -a "{file}" -b {file_list[0]} -m {file_list[2]} -i change-oauth-client-id -i disable-ads -o {apk_output} -c',
+            'Other': f'java -jar {file_list[1]} -a "{file}" -b {file_list[0]} -m {file_list[2]}  -o {apk_output} -c'
         }
 
         # Check if the option is valid and get the corresponding command
         if option in command_map:
             command = command_map[option]
             comend = f"cd /d {Tools_folder} && {command}"
+            print(comend)
             run_command_gui(comend)
             show_custom_popup(name_apk,patched_folder)
         else:
