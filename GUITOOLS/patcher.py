@@ -98,7 +98,7 @@ def pathcer_name(option, file, name_apk, profile):
         command_map = {
             'Youtube': f"java -jar {file_list[1]} -a {file} -b {file_list[0]} -m {file_list[2]} -e always-autorepeat -e custom-video-buffer -e debugging -e downloads -e hide-my-mix -o {apk_output} -c",
             'Youtube Music': f'java -jar {file_list[1]} -a "{file}" -b {file_list[0]} -m {file_list[2]}  -o "{apk_output}" -c',
-            'Tiktok': f"java -jar {file_list[1]} --exclusive --experimental -a {file} -b {file_list[0]} -m {file_list[2]} -i feed-filter -i hide-ads -i playback-speed -i settings -i show-seekbar -i sim-spoof -o {apk_output} -c",
+            'Tiktok': f'java -jar {file_list[1]} --exclusive --experimental -a "{file}" -b {file_list[0]} -m {file_list[2]} -i feed-filter -i hide-ads -i playback-speed -i settings -i show-seekbar -i sim-spoof -o {apk_output} -c',
             'Twitter': f"java -jar {file_list[1]} -a {file} -b {file_list[0]} -m {file_list[2]}  -o {apk_output} -c",
             'Twitch': f"java -jar {file_list[1]} -a {file} -b {file_list[0]} -m {file_list[2]}  -o {apk_output} -c",
             '3er-Reddit': f'java -jar {file_list[1]} --exclusive -a "{file}" -b {file_list[0]} -m {file_list[2]} -i change-oauth-client-id -i disable-ads -o {apk_output} -c',
