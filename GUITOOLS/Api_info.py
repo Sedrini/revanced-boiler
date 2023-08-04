@@ -46,10 +46,10 @@ def api_requests():
 
 def compatible_version():
     response_patches = api_requests()[0]
-    youtube_version = response_patches[0]['compatiblePackages'][0]['versions'][1]
-    twitch_version = response_patches[3]['compatiblePackages'][0]['versions'][0]
-    youtubemusic_version = response_patches[6]['compatiblePackages'][0]['versions']
-    instagram_version = response_patches[66]['compatiblePackages'][0]['versions'][0]
+    youtube_version = response_patches[0]['compatiblePackages'][0]['versions'][3]
+    twitch_version = response_patches[1]['compatiblePackages'][0]['versions'][0]
+    youtubemusic_version = "ALL"
+    instagram_version = response_patches[67]['compatiblePackages'][0]['versions'][0]
     twitter_version = 'ALL'
 
 

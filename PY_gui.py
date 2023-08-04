@@ -79,7 +79,7 @@ def main():
                 sg.Text(compatible[0], key='-Youtube-',visible=False, pad=((0, 0), (20, 0)),  border_width=10),
                 sg.Text(compatible[1], key='-Twitch-',visible=False, pad=((0, 0), (20, 0)),  border_width=10),
                 sg.Text(compatible[2], key='-ymusic-',visible=False, pad=((0, 0), (20, 0)),  border_width=10),
-                sg.Text('All  ', key='-tiktok-',visible=False, pad=((0, 0), (20, 0)),  border_width=10),
+                sg.Text('ALL  ', key='-tiktok-',visible=False, pad=((0, 0), (20, 0)),  border_width=10),
                 sg.Text(compatible[4], key='-twitter-',visible=False, pad=((0, 0), (20, 0)),  border_width=10),
                 ],
 
@@ -165,7 +165,7 @@ def main():
     
 #Open apk_mirror links
         elif event == '-youtube':
-             url = 'https://www.apkmirror.com/apk/google-inc/youtube/youtube-18-23-35-release/youtube-18-23-35-2-android-apk-download/'  # Reemplaza con la URL de la página que deseas abrir
+             url = 'https://www.apkmirror.com/apk/google-inc/youtube/youtube-18-23-36-release/youtube-18-23-36-2-android-apk-download/'  # Reemplaza con la URL de la página que deseas abrir
              webbrowser.open(url)
 
         elif event == '-Tiktok':
@@ -486,12 +486,6 @@ def setting_patches(value):
 
 
 
-
-
-
-
-
-    
 
 if __name__ == '__main__':
     main()
